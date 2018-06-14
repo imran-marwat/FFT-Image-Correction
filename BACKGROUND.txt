@@ -1,0 +1,19 @@
+FFT Image Correction - Imran Marwat
+
+Extracting an image from a camera involves digitising its output, an analog voltage signal, which corresponds to lines in the image, spaced by negative pulses, corresponding to the start of a new line[1]. The digitisation process involves sampling this voltage signal and assigning corresponding intensities to pixels to make up the image.
+However some common problems this process is prone to are incorrect detectionof the negative pulses, which are meant to be ignored, and the subjectionof the voltage signal to random noise. These problems result in the horizontaldisplacement of some lines in the digitised image which degrade its appearance.
+
+The aim of this project is to synchronise the horizontal position of lines in theimage by using Discrete Fourier Transforms and the Convolution Theorem. Adjacent linesin an image are assumed to be very similar and thus can be approximated asthe same function. Adjacent lines are auto-correlated by multiplying theirDFT’s and then finding the inverse FT of the product. The position wherethe auto-correlation is a maximum is the relative shift between the lines, which can then be correctly synchronised.
+
+The methods ‘Shift_Engine’ and ‘Index_Engine’ contain the algorithms for correcting images. 
+
+‘Shift_Engine’ corrects each image according to the fundamental process described above and then corrects the whole array for the median remaining shift. This method is best used for ‘desync2.pgm’ where the fundamental correction process results in a corrected image with a uniform shift.
+
+‘Index_Engine’ corrects each row in an image according to the fundamental process described above. However, it also imposes the condition that rows are not shifted if adjacent pairs of rows have the same shift. This prevents the propagation of incorrect shifts. Best results with ‘desync1.pgm’,’desync3.pgm’ and ‘desync4.pgm’.
+
+
+
+
+
+
+
